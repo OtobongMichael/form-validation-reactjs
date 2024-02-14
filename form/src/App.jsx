@@ -7,11 +7,11 @@ function Form() {
 
     const handleSubmit = (event) => {
     event.preventDefault();
-    const errors = validate();  
-    setErrors(errors);
-    if(object.keys(errors).length === 0) {
-      alert("Done");
-    }
+    const inputError = validate();  
+    setErrors(inputError);
+    // if(object.keys(inputError).length === 0) {
+    //   alert("Done");
+    // }
   }
     
 
@@ -26,10 +26,11 @@ function Form() {
             error.email = "";
            }
        
+           const invalidPassword = (/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/).test(password)
 
        if(!password) {
         error.password = "Password is Required";
-     } else if (password.length < 8) {
+     } else if (!invalidPassword) {
            error.password = "Password not Matched";
         } else {
          error.password = "";
@@ -51,7 +52,7 @@ function Form() {
             </div>
             <div className='form_group'>
              <label htmlFor='password'>Password</label>
-             <input type='password' onChange={(e) => setPassword(e.target.value)} placeholder='Enter Password'/>
+             <input type='text' onChange={(e) => setPassword(e.target.value)} placeholder='Enter Password'/>
              {errors.password && <div className='error'>{errors.password}</div>}
 
             </div>
